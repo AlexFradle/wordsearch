@@ -1,7 +1,6 @@
 from wordsearch_solver import Solver
 from wordsearch_creator import Creator
 import pygame
-from win32api import GetSystemMetrics
 import pyautogui
 from itertools import chain, cycle
 pygame.init()
@@ -15,7 +14,7 @@ class Space(pygame.Rect):
 
 
 # Get width and height of monitor
-width, height = GetSystemMetrics(0), GetSystemMetrics(1)
+width, height = 1920, 1080
 
 # Create display, clock and fonts
 display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
