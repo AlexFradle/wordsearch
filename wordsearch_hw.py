@@ -32,28 +32,20 @@ def find_horizontal(Puzzle, Words, ReplaceWith, Found):
 def rotate_puzzle(Puzzle): return ["".join(row) for row in list(zip(*[list(i) for i in Puzzle]))]
 
 
-def find_vertical(Puzzle, Words, Found):
-    OutPuz, Found = find_horizontal(rotate_puzzle(Puzzle), Words, "|", Found)
-    return rotate_puzzle(OutPuz), Found
+def find_vertical(Puzzle, Words, Found): return tuple([rotate_puzzle(i) if p == 0 else i for p, i in enumerate(find_horizontal(rotate_puzzle(Puzzle), Words, "|", Found))])
 
 
 def find_diagonal(Puzzle, Words, Found):
-    Puzzle = [list(i) for i in Puzzle]
-    for pos in range(len(Puzzle) - 1, -1, -1):
-        for i in range(len(Puzzle) - pos - 1):
-            Puzzle[pos].insert(0, "/")
-        for i in range(pos):
-            Puzzle[pos].insert(len(Puzzle[pos]), "/")
-    Puzzle, Found = find_horizontal(rotate_puzzle(["".join(i) for i in Puzzle]), Words, "+", Found)
+    def make_vert(Puzzle, dir_):
+        for pos in range(len(Puzzle) - 1, -1, -1):
+            for i in range(len(Puzzle) - pos - 1):
+                Puzzle[pos].insert(0 if dir_ == 1 else len(Puzzle), "/")
+            for i in range(pos):
+                Puzzle[pos].insert(len(Puzzle[pos]) if dir_ == 1 else 0, "/")
+        return Puzzle
+    Puzzle, Found = find_horizontal(rotate_puzzle(["".join(i) for i in make_vert([list(i) for i in Puzzle], 1)]), Words, "+", Found)
     Puzzle = [row.replace("/", "") for row in rotate_puzzle(Puzzle)]
-
-    Puzzle = [list(i) for i in Puzzle]
-    for pos in range(len(Puzzle) - 1, -1, -1):
-        for i in range(len(Puzzle) - pos - 1):
-            Puzzle[pos].insert(len(Puzzle), "/")
-        for i in range(pos):
-            Puzzle[pos].insert(0, "/")
-    Puzzle, Found = find_horizontal(rotate_puzzle(["".join(i) for i in Puzzle]), Words, "+", Found)
+    Puzzle, Found = find_horizontal(rotate_puzzle(["".join(i) for i in make_vert([list(i) for i in Puzzle], 2)]), Words, "+", Found)
     return [row.replace("/", "") for row in rotate_puzzle(Puzzle)], Found
 
 
