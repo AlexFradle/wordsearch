@@ -12,7 +12,7 @@ class Solver:
         self.solved_puzzle = self.search_for_words()
         self.missing = self.missing_words()
 
-    def __repr__(self):
+    def __str__(self):
         rows = list(zip(
                 [" ".join(i) for i in self.puzzle],
                 [" ".join(j) for j in self.solved_puzzle],
