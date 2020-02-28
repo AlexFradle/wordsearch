@@ -64,7 +64,7 @@ class Solver:
         """
         assert (file_name.find(".") >= 1 and file_name[file_name.find(".") + 1:] == "txt"), "File not txt or incorrect"
         with open(file_name, "w") as out_file:
-            out_file.writelines(repr(self))
+            out_file.writelines(str(self))
 
     def show_only_words(self) -> list:
         """
