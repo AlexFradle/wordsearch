@@ -53,7 +53,7 @@ class Solver:
         :param puzzle: Puzzle to be rotated
         :return: Rotated puzzle
         """
-        rotate_puz = ["".join(row) for row in list(zip(*[list(i) for i in puzzle][::1]))]
+        rotate_puz = ["".join(row) for row in list(zip(*[list(i) for i in puzzle]))]
         return rotate_puz
 
     def out_to_file(self, file_name="out_puz.txt") -> None:
