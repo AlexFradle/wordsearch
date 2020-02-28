@@ -49,11 +49,11 @@ class Solver:
     @staticmethod
     def rotate_puzzle(puzzle: list) -> list:
         """
-        Rotates puzzle 90 degrees clockwise
+        Rotates puzzle 90 degrees anti-clockwise then 90 degrees clockwise
         :param puzzle: Puzzle to be rotated
         :return: Rotated puzzle
         """
-        rotate_puz = ["".join(row) for row in list(zip(*[list(i) for i in puzzle][::-1]))]
+        rotate_puz = ["".join(row) for row in list(zip(*[list(i) for i in puzzle][::1]))]
         return rotate_puz
 
     def out_to_file(self, file_name="out_puz.txt") -> None:
@@ -143,9 +143,8 @@ class Solver:
         # Find words horizontally
         outpuz = self.find_horizontal(rot_puz, "|")
 
-        # Rotate puzzle 270 degrees to get it back to normal orientation
-        for i in range(3):
-            outpuz = self.rotate_puzzle(outpuz)
+        # Rotate puzzle 90 degrees to get it back to normal orientation
+        outpuz = self.rotate_puzzle(outpuz)
         return outpuz
 
     def find_diagonal(self, puzzle: list) -> list:
@@ -172,8 +171,7 @@ class Solver:
         puzzle = self.find_horizontal(puzzle, "+")
 
         # Make puzzle normal orientation
-        for i in range(3):
-            puzzle = self.rotate_puzzle(puzzle)
+        puzzle = self.rotate_puzzle(puzzle)
 
         # Un-skew puzzle
         puzzle = [row.replace("/", "") for row in puzzle]
@@ -200,8 +198,7 @@ class Solver:
         puzzle = self.find_horizontal(puzzle, "+")
 
         # Make puzzle normal orientation
-        for i in range(3):
-            puzzle = self.rotate_puzzle(puzzle)
+        puzzle = self.rotate_puzzle(puzzle)
 
         # Un-skew puzzle
         puzzle = [row.replace("/", "") for row in puzzle]
